@@ -1,16 +1,16 @@
+// created by hydrogen am bored
+// v0.2
+
 module.exports = async (client, evalString, evalResult, clientName) => {
-    if (evalString.includes(`${clientName}.token`)) {
-        return 1;
-    }
-    if (evalString.includes('token')) {
-        return 1;
-    }
-    if (evalResult.includes(client.token)) {
-        return 1;
-    }
-    if (evalString.includes('client[') && evalString.includes('t')) {
-        return 1;
+    let result = false;
+    
+    if (evalString.includes(`${clientName}.token`)
+            || evalString.includes('token')
+            || evalResult.includes(client.token)
+            || (evalString.includes('client[') && evalString.replace('client[', '').includes('t'))
+            || evalResult.join('') == client.token) {
+        result = true;
     }
     
-    return 0;
+    return result;
 };
